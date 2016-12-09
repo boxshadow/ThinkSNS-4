@@ -920,6 +920,14 @@ class UserModel extends Model
             $user ['intro'] = $user['intro'] ? formatEmoji(false, $user['intro']) : '';
             $user['uname'] = EmojiFormat::de($user['uname']);
 
+            //用户备注
+            if ($GLOBALS ['ts'] ['mid'] != 0) {
+                $rm['mid'] = $GLOBALS['ts']['mid'];
+                $rm['uid'] = $user['uid'];
+                $remark = D('UserRemark')->where($rm)->getField('remark');
+                $user['remark'] = $remark ? $remark : '';
+            }
+
             model('Cache')->set('ui_'.$uid, $user, 600);
             static_cache('user_info_'.$uid, $user);
 

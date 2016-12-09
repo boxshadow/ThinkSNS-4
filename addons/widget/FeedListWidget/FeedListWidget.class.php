@@ -61,6 +61,7 @@ class FeedListWidget extends Widget
                 // $var['channel'] = $num;
                 // unset($sql, $num);
 
+                $uid = $GLOBALS['ts']['mid'];
                 $var['channel'] = \Ts\Models\ChannelCategory::whereHas('follows', function ($q) use ($uid) {
                     $q->where('uid', $uid);
                 })->count();

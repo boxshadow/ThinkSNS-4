@@ -9523,3 +9523,16 @@ ALTER TABLE `ts_feed_data` CHANGE `feed_data` `feed_data` LONGTEXT CHARACTER SET
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+--
+-- 表结构 `ts_user_remark`
+--
+DROP TABLE IF EXISTS `ts_user_remark`;
+CREATE TABLE `ts_user_remark` (
+  `remark_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '备注id',
+  `mid` int(11) NOT NULL,
+  `uid` int(11) NOT NULL,
+  `remark` varchar(255) NOT NULL DEFAULT '' COMMENT '备注名',
+  PRIMARY KEY (`remark_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
