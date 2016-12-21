@@ -71,33 +71,27 @@
         "medz/filesystem": "~1.0",
         "medz/emoji-format": "^1.0",
         "symfony/polyfill-mbstring": "~1.0",
-        "illuminate/database": "4.1.*"
-    },
-    "require-dev": {
-        "friendsofphp/php-cs-fixer": "^1.11"
+        "illuminate/database": "4.1.*",
+        "jpush/jpush": "^3.4",
+        "zhiyicx/thinksns-old-code": "^1.0",
+        "zhiyicx/thinksns-theme-stv1": "^1.0"
     },
     "config": {
         "vendor-dir": "src/vendor/",
         "preferred-install": "dist"
     },
     "autoload": {
-        "files": [
-            "src/old/OpenSociax/functions.inc.php"
-        ],
         "classmap": [
-            "addons/",
-            "src/Ts.php",
-            "src/old/OpenSociax/"
+            "src/Ts.php"
         ],
         "psr-4": {
-            "Ts\\": "src/",
-            "App\\": "apps/"
+            "Ts\\": "src/"
         }
     },
     "support": {
         "email": "support@zhishisoft.com",
         "forum": "http://demo.thinksns.com",
-        "source": "https://github.com/medz/ThinkSNS-4.git"
+        "source": "https://github.com/medz/thinksns.git"
     },
     "suggest":{
         "medz/vendor-pack-pinyin": "This is a converted Chinese characters spelling library.",

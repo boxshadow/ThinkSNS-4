@@ -26,4 +26,4 @@
 api/ts-api.phar
 api/phar.php
 .DS_Store
-.php_cs.cache
+/resources/theme

@@ -1,5 +1,5 @@
 <include file="__THEME__/public_header" />
-<script src="__THEME__/js/module.weibo.js"></script>
+<script src="__THEME__/js/module.weibo.js?v={$site.sys_version}"></script>
 <div id="page-wrap">
   <div id="main-wrap">
     <if condition="$mid==$uid"><include file="_top"/>
@@ -16,9 +16,9 @@
             <span class="right" style="line-height:44px"><a class="btn-att-green mr5" href="javascript:;" event-node="addFollowgroup"><i class="ico-add-white"></i>创建分组</a><a class="btn-att-green" href="javascript:;" event-node="editFollowgroup">管理分组</a> </span>
             <ul class="inner-feed-nav">
               <volist name="groupList" id="vo" offset="0" length="$groupNums"> 
-              <li <eq name="gid" value="$vo['gid']">class="current"</eq>>
-                <a title="{$vo['title']}" href="{:U('public/Profile/following', array('tab'=>'following','uid'=>$mid,'gid'=>$vo['gid'],'follow_key'=>$follow_key))}">{$vo['title']}</a>
-              </li>
+                <li <eq name="gid" value="$vo['gid']">class="current"</eq>>
+                  <a title="{$vo['title']}" href="{:U('public/Profile/following', array('tab'=>'following','uid'=>$mid,'gid'=>$vo['gid'],'follow_key'=>$follow_key))}">{$vo['title'] | htmlspecialchars_decode}</a>
+                </li>
               </volist>
               <php>if($gid && !in_array($gid, array_slice($groupList_ids,0,5))):</php>
               <li class="current"><a title="{$gTitle}" href="{:U('public/Profile/following', array('uid'=>$mid,'gid'=>$gid,'follow_key'=>$follow_key))}">{$gTitle}</a></li>
@@ -94,7 +94,7 @@ M.addEventFns({
           <volist name="groupList" id="vo" offset="$groupNums">
           <php>if($gid != $vo['gid']):</php>
             <php>if($i !== 1 || !in_array($gid, $topGroup)):</php>
-              list += '<li><a title="{$vo['title']}" href="{:U('public/Profile/following', array('gid'=>$vo['gid'],'follow_key'=>$follow_key))}">{$vo['title']}</a></li>';
+              list += '<li><a title="{$vo['title'] | addslashes | htmlspecialchars_decode}" href="{:U('public/Profile/following', array('gid'=>$vo['gid'],'follow_key'=>$follow_key, 'uid'=> $mid, 'tab'=>'following'))}">{$vo['title'] |  addslashes | htmlspecialchars_decode}</a></li>';
             <php>endif;</php>
           <php> endif;</php>
           </volist>

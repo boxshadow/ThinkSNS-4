@@ -15,7 +15,7 @@
           <li>
             <div class="c1"><font color="red"> * </font>标题</div>
             <div class="c2">
-              <input class="text" style="width:670px;" type="text" name="title" id="title" onkeydown="if(event.keyCode==13){return false;}">
+              <input class="text" style="width:690px; padding:6px 4px;" type="text" name="title" id="title" onkeydown="if(event.keyCode==13){return false;}">
             </div>
           </li>
           <li>
@@ -24,7 +24,9 @@
           </li>
           <li>
             <div class="c1">附件</div>
-            <div class="c2">{:W('Upload', array('urlquery'=>'attach_type=weiba_attach'))}</div>
+            <div class="c2">{:W('Upload', array('urlquery'=>'attach_type=weiba_attach'))}
+              <span style="font-size:12px; color:#888;">文件大小不能超过{$attach_update_config.attach_max_size}M，且只允许上传格式：{$attach_update_config.attach_allow_extension}</span>
+            </div>
           </li>
           <li>
             <div class="c1"></div>

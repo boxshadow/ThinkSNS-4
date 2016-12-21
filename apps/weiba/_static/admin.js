@@ -263,3 +263,19 @@ admin.doWeibaAudit = function(weiba_id, value){
             admin.ajaxReload(msg);
         },'json');
 }
+
+/**
+ * 添加首页帖子
+ * @return void
+ */
+admin.checkNewImg = function(form){
+    if(getLength(form.post_id.value) < 1){
+        ui.error('请输入帖子id');
+        return false;
+    }
+    if(getLength(form.index_img.value) < 1){
+        ui.error('请上传摘要图');
+        return false;
+    }
+    return true;    
+};

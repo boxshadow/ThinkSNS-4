@@ -8,7 +8,8 @@
 return array(
 
     /* ThinkSNS v4 */
-    'VERSION' => '4.3.6', // # ThinkSNS 版本
-    'UPURL' => 'http://demo.thinksns.com/upgrade/entry.php', // # 升级地址
+    'VERSION' => '4.6.0', // # ThinkSNS 版本
+    'UPURL'   => 'http://demo.thinksns.com/upgrade/entry.php', // # 升级地址
 
+    'exchange_type' => 5, //智播积分兑换比例 20161030 bs
 );

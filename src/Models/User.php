@@ -3,12 +3,10 @@
 namespace Ts\Models;
 
 use Ts\Bases\Model;
-use Medz\Component\EmojiFormat;
 
 /**
- * 用户数据模型
+ * 用户数据模型.
  *
- * @package Ts\Models\User
  * @author Seven Du <lovevipdsw@outlook.com>
  **/
 class User extends Model
@@ -62,7 +60,7 @@ class User extends Model
 
     public function scopeByUserName($query, $username)
     {
-        $username = EmojiFormat::en($username);
+        $username = self::enEmoji($username);
 
         return $query->where('uname', '=', $username);
     }
@@ -79,12 +77,12 @@ class User extends Model
 
     public function setUnameAttribute($username)
     {
-        $this->attributes['uname'] = EmojiFormat::en($username);
+        $this->attributes['uname'] = self::enEmoji($username);
     }
 
     public function getUnameAttribute($username)
     {
-        return EmojiFormat::de($username);
+        return self::deEmoji($username);
     }
 
     public function setPasswordAttribute($password)
@@ -105,22 +103,22 @@ class User extends Model
 
     public function setSearchKeyAttribute($key)
     {
-        $this->attributes['search_key'] = EmojiFormat::en($key);
+        $this->attributes['search_key'] = self::enEmoji($key);
     }
 
     public function getSearchKeyAttribute($key)
     {
-        return EmojiFormat::de($key);
+        return self::deEmoji($key);
     }
 
     public function setIntroAttribute($intro)
     {
-        $this->attributes['intro'] = EmojiFormat::en($intro);
+        $this->attributes['intro'] = self::enEmoji($intro);
     }
 
     public function getIntroAttribute($intro)
     {
-        return EmojiFormat::de($intro);
+        return self::deEmoji($intro);
     }
 
     public function checkPassword($password)

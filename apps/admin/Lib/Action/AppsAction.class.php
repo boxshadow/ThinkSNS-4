@@ -1,25 +1,25 @@
 <?php
 
-tsload(APPS_PATH.'/admin/Lib/Action/AdministratorAction.class.php');
 /**
- * 后台应用管理
+ * 后台应用管理.
  *
  * @author jason
  */
 class AppsAction extends AdministratorAction
 {
     public $pageTitle = array(
-        'index' => '已安装应用列表',
-        'install' => '待安装应用列表',
-        'onLineApp' => '在线应用',
+        'index'         => '已安装应用列表',
+        'install'       => '待安装应用列表',
+        'onLineApp'     => '在线应用',
         'setCreditNode' => '积分节点设置',
-        'setPermNode' => '权限节点设置',
-        'setFeedNode' => '分享模板设置',
+        'setPermNode'   => '权限节点设置',
+        'setFeedNode'   => '分享模板设置',
     );
 
     private $appStatus = array('0' => '关闭', '1' => '开启');    //应用状态
     private $host_type_alias = array(0 => '本地应用', 1 => '远程应用');    //托管状态
     private $RemoteAppURL = '';
+
     public function _initialize()
     {
         $this->pageTitle['index'] = L('PUBLIC_INSTALLED_APPLIST');
@@ -297,137 +297,6 @@ class AppsAction extends AdministratorAction
             $return['data'] = '设置失败！';
             echo json_encode($return);
             exit();
-        }
-    }
-
-    //在线应用
-/*	function onLineApp(){
-        $url = $this->RemoteAppURL.'/index.php?app=public&mod=Tool&act=getAppsOnLineInfo';
-        $list = file_get_contents($url);
-        $list = json_decode($list, true);
-
-        $loadlist = Model('App')->field('app_name,version')->findAll();
-        foreach ($loadlist as $v){
-            $appVersion[$v['app_name']] = $v['version'];
-            $appName[$v['app_name']] = $v['app_name'];
-        }
-        unset($loadlist);
-
-        foreach ($list as $k=>&$v){
-            if(in_array($v['app_name'], $appName)){
-                if($v['version']==$appVersion[$v['app_name']]){
-                    unset($list[$k]);  //已安装并且版本号一样不再显示
-                }else{
-                    $v['isUpdate'] = true; //安装过的应用有更新版本
-                }
-            }else{
-                $v['isUpdate'] = false; //未安装过的应用
-            }
-        }
-
-        $dirIsWritable = is_writable(APPS_PATH);
-        $type = array('1'=>'模板','2'=>'插件','3'=>'应用'); //插件类型,1:模板皮肤;2:插件;3:应用
-
-        foreach ($list as &$vo){
-            $vo['title'] = '<a href="'.$this->RemoteAppURL.'/index.php?app=develop&mod=Index&act=detail&id='.$vo['develop_id'].'" target="_blank">'.$vo['title'].'</a>';
-            $vo['type'] = $type[$vo['type']];
-            $vo['user'] = '<a href="'.$this->RemoteAppURL.'/index.php?app=public&mod=Profile&act=index&uid='.$vo['uid'].'" target="_blank">'.$vo['user'].'</a>';
-            unset($vo['uid']);
-            $vo['option'] = '<a href="'.$this->RemoteAppURL.'/index.php?app=develop&mod=Index&act=download&id='.$vo['develop_id'].'">下载</a> ';
-
-            if($dirIsWritable){
-                if($vo['isUpdate']){
-                    $vo['option'] .= '<a href="'.U('admin/Apps/downloadAndInstall', array('develop_id'=>$vo['develop_id'])).'">一键更新</a>';
-                }else{
-                    $vo['option'] .= '<a href="'.U('admin/Apps/downloadAndInstall', array('develop_id'=>$vo['develop_id'])).'">一键安装</a>';
-                }
-            }
-
-        }
-        //dump($list);
-
-        $this->pageKeyList = array('title','type','download_count','user','option');
-
-        $listData['data']= $list;
-
-        $this->allSelected = false;
-        $this->displayList($listData);
-    }*/
-
-    /**
-     * 在线应用
-     */
-    public function onLineApp()
-    {
-        // 获取站点域名
-        $host = str_replace('http://', '', SITE_URL);
-        // 验证站点是否登陆
-        $iframeUrl = $this->RemoteAppURL.'/index.php?app=develop&mod=Public&act=getAppStoreHome&h='.base64_encode($host);
-        $this->assign('iframeUrl', $iframeUrl);
-        $this->display();
-    }
-
-    /**
-     * 一键安装接口
-     */
-    public function downloadAndInstall()
-    {
-        header('content-Type: text/html; charset=utf-8');
-        // 获取下载地址
-        $develop_id = intval($_GET['develop_id']);
-        $url = $this->RemoteAppURL.'/index.php?app=public&mod=Tool&act=downloadApp&develop_id='.$develop_id;
-        $info = file_get_contents($url);
-        $info = json_decode($info, true);
-        // 载入下载类
-        tsload(ADDON_PATH.'/library/Update.class.php');
-        $updateClass = new Update();
-        //从服务器端下载应用到本地
-        $res = $updateClass->downloadFile($info['packageURL']);
-        if ($res != 1) {
-            $this->error('下载应用失败，请确认网络是否正常');
-            exit;
-        }
-        // 压缩
-        $package = explode('/', $info['file']['filename']);
-        $packageName = array_pop($package);
-        $targetDir = $updateClass->downloadPath.'unzip';
-        // 创建目录unzip
-        if (!is_dir($targetDir)) {
-            @mkdir($targetDir, 0777);
-        }
-        $res = $updateClass->unzipPackage($packageName, $targetDir);
-        if ($res != 1) {
-            $this->error('下载应用解压失败');
-            exit;
-        }
-        // 覆盖代码
-        switch ($info['type']) {
-            case 3:
-                 // 应用
-                $res = $updateClass->overWrittenFile(APPS_PATH);
-                break;
-            case 2:
-                // 插件
-                $res = $updateClass->overWrittenFile(ADDON_PATH.'/plugin');
-                break;
-            case 1:
-                // 皮肤
-                $res = $updateClass->overWrittenFile(ADDON_PATH.'/theme');
-                break;
-        }
-        // 安装
-        switch ($info['type']) {
-            case 3:
-                // 应用
-                U('admin/Apps/preinstall', array('app_name' => $info['app_name'], 'install' => 1), true);
-                break;
-            case 2:
-                // 插件
-                U('admin/Addons/index', array('install' => 1), true);
-                break;
-            case 1:
-                U('admin/Apps/onLineApp', true);
-                break;
         }
     }
 }

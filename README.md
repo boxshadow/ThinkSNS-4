@@ -32,7 +32,7 @@ composer update
 
 # 开源的力量
 ## 我们需要你
-一款开源程序的发展，不能只靠我们自己，我们希望更多的开发者加入到Ts的开发当中，还原发送邮件到 [lovevipdsw@outlook.com](mailto://lovevipdsw@outlook.com) 申请合作者。
+一款开源程序的发展，不能只靠我们自己，我们希望更多的开发者加入到Ts的开发当中，还原发送邮件到 [shiweidu@outlook.com](mailto://shiweidu@outlook.com) 申请合作者。
 当然，不一定要成为合作者才能为Ts贡献代码，你可以先Fork到自己的仓库中，进行更新~我们会定期合并。
 如果你觉得，我们查看的效率太慢，如果你提交的代码的确优秀或者你希望加入的Ts开发当中，可以发送邮件来申请协作者。
 ## 申请成功后需要注意什么~
@@ -41,8 +41,11 @@ composer update
 * 和你一样的协作者以及主版本都将择优使用你的代码。
 * 为了情怀。
 
-## 还有什么
-TS中存在太多冗余的东西，尤其是js，不知道哪位愿意做清理工作呢？
+## 🙏
+
+- 前端清理工作：🙏感谢*耿师傅*，正在进行～上上一个💋。
+- 稳定性修复工作：[@HHHCODE](https://github.com/HHHCODE).
+
 
 ## LICENSE
 [ThinkSNS授权协议](http://www.thinksns.com/commercialAuthorizationa.htm)

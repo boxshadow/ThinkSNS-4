@@ -2,22 +2,24 @@
 
 tsload(APPS_PATH.'/admin/Lib/Action/AdministratorAction.class.php');
 /**
- * 后台用户组管理
+ * 后台用户组管理.
  *
  * @author jason
  */
 class UserGroupAction extends AdministratorAction
 {
     public $pageTitle = array(
-                            'index' => '用户组管理',
+                            'index'        => '用户组管理',
                             'addUsergroup' => '编辑用户组',
                             );
+
     public function _initialize()
     {
         $this->pageTitle['index'] = L('PUBLIC_USER_GROUP_MANAGEMENT');
         $this->pageTitle['addUsergroup'] = L('PUBLIC_EDIT_USER_GROUP');
         parent::_initialize();
     }
+
     public function index()
     {
 
@@ -29,7 +31,7 @@ class UserGroupAction extends AdministratorAction
 
         $list = model('UserGroup')->findPage(10);
 
-        foreach ($list['data'] as & $value) {
+        foreach ($list['data'] as &$value) {
             $value['user_group_type'] = empty($value['user_group_type']) ? L('PUBLIC_ORDINARY') : L('PUBLIC_SPECIAL');
             $value['user_group_icon'] = $value['user_group_icon'] != '-1' ? '<img src="'.THEME_PUBLIC_URL.'/image/usergroup/'.$value['user_group_icon'].'">' : '';
             $value['is_authenticate'] = $value['is_authenticate'] == 1 ? '是' : '否';
@@ -65,7 +67,6 @@ class UserGroupAction extends AdministratorAction
         $this->opt['user_group_type'] = array(0 => L('PUBLIC_ORDINARY'), 1 => L('PUBLIC_SPECIAL'));
         $this->opt['is_authenticate'] = array(1 => '是', 0 => '否');
 
-        require_once ADDON_PATH.'/library/io/Dir.class.php';
         $dirs = new Dir(THEME_PUBLIC_PATH.'/image/usergroup');
         $dirs = $dirs->toArray();
 //      $icons = array('-1'=>'无');
@@ -90,6 +91,7 @@ class UserGroupAction extends AdministratorAction
         $this->onsubmit = 'admin.checkUserGroup(this)';
         $this->displayConfig($detailData);
     }
+
     //删除用户
     public function delgroup()
     {

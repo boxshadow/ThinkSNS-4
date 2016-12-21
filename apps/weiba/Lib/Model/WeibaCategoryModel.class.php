@@ -1,8 +1,8 @@
 <?php
 /**
- * 微吧分类
- * @author Stream
+ * 微吧分类.
  *
+ * @author Stream
  */
 class WeibaCategoryModel extends Model
 {
@@ -12,7 +12,7 @@ class WeibaCategoryModel extends Model
             2 => 'name',
             );
 
-    public function getAllWeibaCate($map)
+    public function getAllWeibaCate($map = array())
     {
         $list = $this->where($map)->findAll();
         $temp = array();
